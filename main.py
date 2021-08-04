@@ -1,4 +1,6 @@
 from tkinter import *
+import pandas
+import random
 
 BACKGROUND_COLOR = "#B1DDC6"
 
@@ -7,6 +9,16 @@ BACKGROUND_COLOR = "#B1DDC6"
 window = Tk()
 window.title("Flash Card")
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
+
+# read csv using panda
+data = pandas.read_csv("./data/french_words.csv")
+french_words_list = data["French"].to_list()
+english_words_list = data["English"].to_list()
+
+# pick random a word
+random_num = random.randint(0, len(french_words_list)-1)
+random_english = english_words_list[random_num]
+random_french = french_words_list[random_num]
 
 # same size as the card image
 canvas = Canvas(width=800, height=526)
@@ -24,8 +36,8 @@ canvas.grid(column=0, row=0, columnspan=2)
 canvas.config(bg=BACKGROUND_COLOR,  highlightthickness=0)
 
 # ---------------------------- Text on canvas --------------------------------------#
-canvas.create_text(400, 150, font="Ariel 40 italic", text="Title")
-canvas.create_text(400, 263, font="Ariel 60 bold", text="Word")
+canvas.create_text(400, 150, font="Ariel 40 italic", text="French")
+canvas.create_text(400, 263, font="Ariel 60 bold", text=random_french)
 
 # ---------------------------- Button --------------------------------------#
 right_button = Button(image=right_image, highlightthickness=0)
