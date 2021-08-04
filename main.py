@@ -7,15 +7,20 @@ BACKGROUND_COLOR = "#B1DDC6"
 # read csv using panda
 data = pandas.read_csv("./data/french_words.csv")
 to_learn = data.to_dict(orient="records")
-print(to_learn[0]["French"])
+current_card = {}
 
 
 def next_card():
+    global current_card
     current_card = random.choice(to_learn)  # eg : {'French': 'vers', 'English': 'towards'}
-    # random_english = current_card["English"]
     random_french = current_card["French"]
     canvas.itemconfig(card_title, text="French")  # change the text
     canvas.itemconfig(card_word, text=random_french)  # change the text
+
+def flip_card():
+    random_english = current_card["English"]
+    canvas.itemconfig(card_title, text="English")
+    canvas.itemconfig(card_word, text=random_english)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -23,6 +28,9 @@ def next_card():
 window = Tk()
 window.title("Flash Card")
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
+
+# execute a command after a time delay
+window.after(3000, func=flip_card)
 
 # same size as the card image
 canvas = Canvas(width=800, height=526)
