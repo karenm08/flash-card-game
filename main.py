@@ -21,6 +21,7 @@ def next_card():
     canvas.itemconfig(card_background, image=card_front_image)
     flip_timer = window.after(3000, func=flip_card)
 
+
 def flip_card():
     random_english = current_card["English"]
     canvas.itemconfig(card_title, text="English", fill="white")
@@ -49,7 +50,7 @@ card_background = canvas.create_image(400, 263, image=card_front_image)
 canvas.grid(column=0, row=0, columnspan=2)
 
 # cover the white line at the back
-canvas.config(bg=BACKGROUND_COLOR,  highlightthickness=0)
+canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
 
 # ---------------------------- Text on canvas --------------------------------------#
 card_title = canvas.create_text(400, 150, font="Ariel 40 italic", text="")
