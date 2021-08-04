@@ -19,8 +19,9 @@ def next_card():
 
 def flip_card():
     random_english = current_card["English"]
-    canvas.itemconfig(card_title, text="English")
-    canvas.itemconfig(card_word, text=random_english)
+    canvas.itemconfig(card_title, text="English", fill="white")
+    canvas.itemconfig(card_word, text=random_english, fill="white")
+    canvas.itemconfig(card_background, image=card_back_image)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -41,7 +42,7 @@ wrong_image = PhotoImage(file="./images/wrong.png")
 
 # ---------------------------- Card --------------------------------------#
 # half of the width and height to center the card
-canvas.create_image(400, 263, image=card_front_image)
+card_background = canvas.create_image(400, 263, image=card_front_image)
 canvas.grid(column=0, row=0, columnspan=2)
 
 # cover the white line at the back
