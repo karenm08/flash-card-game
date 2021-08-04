@@ -3,16 +3,23 @@ import pandas
 import random
 
 BACKGROUND_COLOR = "#B1DDC6"
+current_card = {}
+to_learn = {}
 
 # read csv using panda
-data = pandas.read_csv("./data/french_words.csv")
-to_learn = data.to_dict(orient="records")
-current_card = {}
+try:
+    data = pandas.read_csv("./data/words_to_learn.csv")
+except FileNotFoundError:
+    original_data = pandas.read_csv("./data/french_words.csv")
+    to_learn = original_data.to_dict(orient="records")
+else:
+    to_learn = data.to_dict(orient="records")
 
 
 # In french
 def next_card():
     global current_card, flip_timer
+    print(len(to_learn))
     # when click on btn => cancel the timer (no matter u click the btn , it'll not flip til you land on a card and
     # wait 3s)
     window.after_cancel(flip_timer)
