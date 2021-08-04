@@ -10,23 +10,37 @@ to_learn = data.to_dict(orient="records")
 current_card = {}
 
 
+# In french
 def next_card():
     global current_card, flip_timer
-    # when click on btn => cancel the timer (no matter u click the btn , it'll not flip til you land on a card and wait 3s)
+    # when click on btn => cancel the timer (no matter u click the btn , it'll not flip til you land on a card and
+    # wait 3s)
     window.after_cancel(flip_timer)
     current_card = random.choice(to_learn)  # eg : {'French': 'vers', 'English': 'towards'}
     random_french = current_card["French"]
-    canvas.itemconfig(card_title, text="French", fill="black")  # change the text
+
+    # change the text/image
+    canvas.itemconfig(card_title, text="French", fill="black")
     canvas.itemconfig(card_word, text=random_french, fill="black")
     canvas.itemconfig(card_background, image=card_front_image)
     flip_timer = window.after(3000, func=flip_card)
 
 
+# In English
 def flip_card():
     random_english = current_card["English"]
     canvas.itemconfig(card_title, text="English", fill="white")
     canvas.itemconfig(card_word, text=random_english, fill="white")
     canvas.itemconfig(card_background, image=card_back_image)
+
+
+# when click on right button then remove word for list
+def is_known():
+    print(current_card)
+    to_learn.remove(current_card)
+    data = pandas.DataFrame(to_learn)  # list => DataFrame
+    data.to_csv("data/words_to_learn.csv", index=False)
+    next_card()
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -57,7 +71,7 @@ card_title = canvas.create_text(400, 150, font="Ariel 40 italic", text="")
 card_word = canvas.create_text(400, 263, font="Ariel 60 bold", text="")
 
 # ---------------------------- Button --------------------------------------#
-right_button = Button(image=right_image, highlightthickness=0, command=next_card)
+right_button = Button(image=right_image, highlightthickness=0, command=is_known)
 right_button.grid(column=1, row=1)
 
 wrong_button = Button(image=wrong_image, highlightthickness=0, command=next_card)
